@@ -1,0 +1,167 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <%- include('./partials/head.ejs') %>
+    <body class="white-background">
+
+		<!-- Scroll-top -->
+        <button class="scroll-top scroll-to-target" data-target="html">
+            <i class="fas fa-angle-up"></i>
+        </button>
+        <!-- Scroll-top-end-->
+
+        <!-- header-area -->
+        <%- include('./partials/nav.ejs') %>
+        <!-- header-area-end -->
+
+
+        <!-- main-area -->
+        <main>
+
+            <!-- breadcrumb-area -->
+            <section class="breadcrumb-area breadcrumb-bg">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="breadcrumb-content text-center">
+                                <h2 class="title">Contact Us</h2>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- breadcrumb-area-end -->
+
+            <!-- contact-area -->
+            <section class="contact-area">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <div class="alert alert-success my-3 text-center" id="success-alert" role="alert" style="display: none;">
+                                <p>You message has been sent successfully!</p>
+                            </div>
+                            <div class="alert alert-danger my-3 text-center" role="alert" id="failed-alert" style="display: none;">
+                                <p>There was an error sending your message!</p>
+                            </div>
+                            <div class="section-title text-center mb-40">
+                                <span class="sub-title">contact us now</span>
+                                <h2 class="title">Write a Message</h2>
+                            </div>
+                            <div class="contact-form">
+                                <form id="my-contact-form">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-grp">
+                                                <input type="text" name="fullname" placeholder="Your Name *" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-grp">
+                                                <input type="email" name="email" placeholder="Your Email *" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-grp">
+                                                <input type="text" name="subject" placeholder="Subject *" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-grp">
+                                                <input type="number" name="phoneumber" placeholder="Your Mobile *" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-grp">
+                                        <textarea name="message" name="message" placeholder="Message *" required></textarea>
+                                    </div>
+                                    <div class="submit-btn text-center">
+                                        <button type="submit" class="btn" id="submit-contact-btn">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- contact-area-end -->
+        </main>
+        <!-- main-area-end -->
+
+        <%- include('./partials/footer.ejs') %>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function(event){
+                const successAlert = document.querySelector('#success-alert');
+                const failedAlert = document.querySelector('#failed-alert');
+                const submitButton = document.querySelector('#submit-contact-btn');
+                const form = document.querySelector('#my-contact-form');
+
+                function handleFormSubmission(event) {
+                    event.preventDefault();
+
+                    submitButton.innerText = 'Sending....'
+            
+                // Access form data
+                    const form = event.target;
+                    const formData = new FormData(form);
+                    const formDataObject = {};
+                
+                    formData.forEach(function(value, key) {
+                        formDataObject[key] = value;
+                    });
+                
+                    // axios POST request
+                        const options = {
+                            url: `https://orchidsprings.cyclic.cloud/api/contact`,
+                            method: 'POST',
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json;charset=UTF-8'
+                            },
+                            data: formDataObject
+                        };
+                        axios(options)
+                          .then(response => {
+                              if(response.data) {
+                                failedAlert.style.display = 'block'
+                                submitButton.innerText = 'Submit'
+
+                                setTimeout(() => {
+                                    failedAlert.style.display = 'none'
+                                }, 4000)
+                              } else {
+                                successAlert.style.display = 'block'
+                                setTimeout(() => {
+                                    successAlert.style.display = 'none'
+                                }, 4000)
+                                submitButton.innerText = 'Submit'
+                                form.reset()
+                              }
+                          }).catch((err) => {
+                            console.log(err)
+                            failedAlert.style.display = 'block'
+                            submitButton.innerText = 'Submit'
+                            
+
+                            setTimeout(() => {
+                                failedAlert.style.display = 'none'
+                            }, 4000)
+
+                          });
+                          submitButton.innerText = 'Submit'
+                }
+
+                
+                form.addEventListener('submit', handleFormSubmission);
+
+            });
+
+
+        </script>
+    </body>
+</html>

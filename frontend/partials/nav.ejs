@@ -1,0 +1,83 @@
+
+
+		<!-- Scroll-top -->
+        <button class="scroll-top scroll-to-target" data-target="html">
+            <i class="fas fa-angle-up"></i>
+        </button>
+        <!-- Scroll-top-end-->
+
+        <!-- header-area -->
+        <header>
+            <div class="header-top">
+                <div class="container custom-container">
+                    <div class="row">
+                    </div>
+                </div>
+            </div>
+            <div id="sticky-header" class="menu-area transparent-header">
+                <div class="container custom-container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mobile-nav-toggler"><i class="fas fa-bars"></i></div>
+                            <div class="menu-wrap">
+                                <nav class="menu-nav">
+                                    <div class="logo"><a href="/"><img src="assets/img/logo/logo.png" alt=""></a></div>
+                                    <div class="navbar-wrap main-menu d-none d-lg-flex">
+                                        <% if(title === 'Dashboard') {%>
+                                            <ul class="navigation">
+                                                <li class="active"><a href="/api/auth/logout">Logout</a></li>
+                                            </ul>
+                                        <%} else {%>
+                                            <ul class="navigation">
+                                                <li class="active"><a href="/">Home</a></li>
+                                                <li><a href="/about">About</a></li>
+                                                <li><a href="/contact">Contact</a></li>
+                                            </ul>
+                                        <% } %>
+                                    </div>
+                                    <div class="header-action d-none d-md-block">
+                                        <ul>
+                                            <% if(title === 'Home'){ %>
+                                                <% 
+                                                    function padTo2Digits(num) {
+                                                        return num.toString().padStart(2, '0');
+                                                    }
+                                                    function formatDate(date = new Date()) {
+                                                    return [
+                                                        date.getFullYear(),
+                                                        padTo2Digits(date.getMonth() + 1),
+                                                        padTo2Digits(date.getDate()),
+                                                    ].join('-');
+                                                    }
+                                                
+                                                %>  
+
+                                                <!-- <form action="/booking" id="" method="get">
+                                                    <input type="hidden" name="start_date" value="<%= formatDate() %>">
+                                                    <input type="hidden" name="end_date" value="<%= formatDate() %>">
+                                                    <li class="header-btn"><button type="submit" class="btn" id="book-now">Book Now!</button></li>
+                                                </form> -->
+                                                <li class="header-btn"><a href="#book-wrap" class="btn">Book Now!</a></li>
+                                            <%}%>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                            <!-- Mobile Menu  -->
+                            <div class="mobile-menu">
+                                <nav class="menu-box">
+                                    <div class="close-btn"><i class="fa-solid fa-xmark"></i></div>
+                                    <div class="nav-logo"><a href="/"><img src="assets/img/logo/logo_02.png" alt="" title=""></a>
+                                    </div>
+                                    <div class="menu-outer">
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="menu-backdrop"></div>
+                            <!-- End Mobile Menu -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- header-area-end -->

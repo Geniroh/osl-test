@@ -1,0 +1,130 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <%- include('./partials/head.ejs') %>
+    
+    <body class="white-background">
+        <%- include('./partials/nav.ejs') %>
+
+        <!-- main-area -->
+        <main>
+
+            <!-- breadcrumb-area -->
+            <section class="breadcrumb-area breadcrumb-bg">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="breadcrumb-content text-center">
+                                <h2 class="title">Payment Details</h2>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Payment</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- breadcrumb-area-end -->
+
+            <!-- customer-details-area -->
+            <section class="customer-details-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="customer-details-content">
+                                <div class="icon">
+                                    <img src="assets/img/icon/customer_det_icon.jpg" alt="">
+                                </div>
+                                <div class="content">
+                                    <h2 class="title">Payment</h2>
+                                    <div class="customer-progress-wrap">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                        <div class="customer-progress-step">
+                                            <ul>
+                                                <li>
+                                                    <span>3</span>
+                                                    <p>Payment</p>
+                                                </li>
+                                                <li>
+                                                    <span>4</span>
+                                                    <p>Confirmation</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- customer-details-area-end -->
+
+            <!-- booking-details-area -->
+            <section class="booking-details-area">
+                <div class="container">
+                    <div class="row justify-content-center">
+
+                        <div class="col-46">
+                            <aside class="booking-sidebar">
+                                <h2 class="main-title">Payment Info</h2>
+
+                                <div class="widget">
+                                    <div class="price-summary-top">
+                                        <ul>
+                                            <li>Details</li>
+                                            <!-- <li>Amount</li> -->
+                                        </ul>
+                                    </div>
+                                        <div class="price-summary-detail">
+                                            <ul>
+                                                <li>Name<span><%= data.name %></span></li>
+                                                <li>Email<span><%= data.email %></span></li>
+                                                <li>Spaces to reserve
+                                                    <span>
+                                                      <% if (data.details.length > 0) { %>
+                                                        <% data.details.forEach((detail) => { %>
+                                                          <% if (detail.seatType === 'room') { %>
+                                                            <span>Conference Room (<%= detail.seatNumber %>)</span><br>
+                                                          <% } else { %>
+                                                            <span>Seat (<%= detail.seatNumber %>)</span><br>
+                                                          <% } %>
+                                                          <% detail.dates.forEach((date) => { %>
+                                                            <span>Date (<%= date %>)</span><br>
+                                                          <% }); %>
+                                                        <% }); %>
+                                                      <% } %>
+                                                    </span>
+                                                  </li>
+                                                  
+                                                <li>Price<span>₦ <%= data.total %></span></li>
+                                            </ul>
+
+                                            <form action="/api/payment" method="post">
+                                                <input type="hidden" name="email" value="<%= data.email %>">
+                                                <input type="hidden" name="phonenumber" value="<%= data.phonenumber %>">
+                                                <input type="hidden" name="amount" value="<%= data.total %>">
+                                                <input type="hidden" name="name" value="<%= data.name %>">
+                                                <input type="hidden" name="tx_ref" value="<%= data.tx_ref %>">
+                                                
+                                                <button class="btn" type="submit" style="width: 100%;">Pay Now</button>
+                                            </form>
+                                        </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- booking-details-area-end -->
+
+        </main>
+        <!-- main-area-end -->
+        <%- include('./partials/footer.ejs') %>       
+    </body>
+</html>
